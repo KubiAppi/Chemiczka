@@ -1,9 +1,9 @@
-package com.kubibestappi.game.client;
+package com.kubiappi.game.client;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.kubibestappi.game.GameMain;
+import com.kubiappi.game.GameMain;
 
 public class HtmlLauncher extends GwtApplication {
 

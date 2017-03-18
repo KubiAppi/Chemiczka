@@ -1,11 +1,10 @@
-package com.kubibestappi.game;
+package com.kubiappi.game;
 
 import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.kubibestappi.game.GameMain;
-import com.kubibestappi.info.GameInfo;
+import com.kubiappi.game.GameMain;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override
