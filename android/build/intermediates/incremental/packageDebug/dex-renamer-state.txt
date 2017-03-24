@@ -1,0 +1,7 @@
+#Wed Mar 22 22:17:28 CET 2017
+base.0=F\:\\java projekt\\Chemiczka2\\android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_19fc3201a5fa10161d8cdd0b564ddc98878c094e
+renamed.1=classes2.dex
+renamed.0=classes.dex
+file.1=F\:\\java projekt\\Chemiczka2\\android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_3e5cfa3651e491f773cfb032fc9bc9a2995f4fa6\\classes.dex
+base.1=F\:\\java projekt\\Chemiczka2\\android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_3e5cfa3651e491f773cfb032fc9bc9a2995f4fa6
+file.0=F\:\\java projekt\\Chemiczka2\\android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_19fc3201a5fa10161d8cdd0b564ddc98878c094e\\classes.dex

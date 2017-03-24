@@ -2,6 +2,7 @@ package com.kubiappi.Entites;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.kubiappi.enums.FlaskType;
 import com.kubiappi.info.GameInfo;
 
 /**
@@ -13,10 +14,12 @@ public class Player {
     public int lives;
 
     private float x, y;
+    private FlaskType lastCollision;
+    private int lastId;
 
     public Player(){
         collisionRectanglePlayer = new Rectangle(x,y, GameInfo.PLAYER_WIDTH,GameInfo.PLAYER_HEIGHT);
-        lives = 3;
+        lives = 5;
     }
 
     public void setPosition(int x, int y){
@@ -36,5 +39,21 @@ public class Player {
 
     public Rectangle getCollisionRectanglePlayer() {
         return collisionRectanglePlayer;
+    }
+
+    public void setLastCollision(FlaskType lastCollision) {
+        this.lastCollision = lastCollision;
+    }
+
+    public FlaskType getLastCollision() {
+        return lastCollision;
+    }
+
+    public void setLastId(int lastId) {
+        this.lastId = lastId;
+    }
+
+    public int getLastId() {
+        return lastId;
     }
 }
