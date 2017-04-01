@@ -13,7 +13,7 @@ import com.kubiappi.enums.FlaskType;
 public abstract class FlaskMain {
 
     protected Texture texture;
-    public FlaskType flasktype;
+    protected FlaskType flasktype;
     int id;
     Vector2 position;
     float timer;
@@ -22,6 +22,7 @@ public abstract class FlaskMain {
     public abstract void onCollisionPlayer(Vector2 flaskPosition);
     public abstract void lookTimer();
     public abstract Circle getCollisionCircle();
+    public abstract Circle[] getCollisionCircles();
     public abstract Rectangle getCollisionRectangle();
     public abstract boolean PlayerCollision(Player player);
 
@@ -35,5 +36,9 @@ public abstract class FlaskMain {
 
     public int getId() {
         return id;
+    }
+
+    public FlaskType getFlasktype() {
+        return flasktype;
     }
 }

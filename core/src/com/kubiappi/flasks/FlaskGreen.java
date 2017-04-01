@@ -36,13 +36,18 @@ public class FlaskGreen extends FlaskMain {
     @Override
     public void lookTimer() {
         timer += Gdx.graphics.getDeltaTime();
-        if(timer > 3f)
+        if(timer > 6f)
             collisionRectangle = null;
     }
 
     @Override
     public Circle getCollisionCircle() {
         return null;
+    }
+
+    @Override
+    public Circle[] getCollisionCircles() {
+        return new Circle[0];
     }
 
     @Override

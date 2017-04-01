@@ -9,6 +9,6 @@ public enum FlaskType {
     RED,
     GREEN,
     YELLOW,
-    ORANGE,
+    EMPTY,
     BLUE
 }

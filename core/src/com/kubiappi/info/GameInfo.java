@@ -24,4 +24,7 @@ public class GameInfo {
     public static final Vector2 FLASK_THROW_3 = new Vector2(75,300);
     public static final Vector2 FLASK_THROW_4 = new Vector2(50,300);
     public static final Vector2 FLASK_THROW_5 = new Vector2(25,300);
+
+    public static final float FLASK_YELLOW_BIG_RADIUS = 35;
+    public static final float FLASK_YELLOW_SMALL_RADIUS = 20;
 }

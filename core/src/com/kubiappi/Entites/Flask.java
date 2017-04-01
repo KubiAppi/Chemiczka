@@ -5,10 +5,8 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.kubiappi.flasks.FlaskGreen;
-import com.kubiappi.flasks.FlaskRed;
+import com.kubiappi.flasks.*;
 import com.kubiappi.enums.FlaskType;
-import com.kubiappi.flasks.FlaskMain;
 import com.kubiappi.info.GameInfo;
 
 import java.util.Random;
@@ -19,7 +17,7 @@ public class Flask {
     private boolean newFlask;
     private Vector2 selectThrow;
     private Vector2 position;
-    public FlaskMain flaskSelection,oldFlask;
+    private FlaskMain flaskSelection,oldFlask;
     private int id;
 
     public Flask(){
@@ -72,19 +70,25 @@ public class Flask {
 
     public void randomSelectFlaskType(){
         Random rand = new Random();
-        switch (rand.nextInt(2)){
+        oldFlask = flaskSelection;
+        switch (rand.nextInt(5)){
             case 0:
-                oldFlask = flaskSelection;
                 flaskSelection = new FlaskRed();
                 break;
             case 1:
-                oldFlask = flaskSelection;
                 flaskSelection = new FlaskGreen();
                 break;
+            case 2:
+                flaskSelection = new FlaskBlue();
+                break;
+            case 3:
+                flaskSelection = new FlaskEmpty();
+                break;
+            case 4:
+                flaskSelection = new FlaskYellow();
             default:
-                oldFlask = flaskSelection;
-                flaskSelection = new FlaskGreen();
-                break;
+                flaskSelection = new FlaskYellow();
+
         }
     }
 
@@ -114,6 +118,13 @@ public class Flask {
             return false;
     }
 
+    public boolean oldCircleArrayTrue(){
+        if(oldFlask.getCollisionCircles() != null)
+            return true;
+        else
+            return false;
+    }
+
     public boolean oldPlayerCollision(Player player){
         if(oldFlask.PlayerCollision(player))
             return true;
@@ -136,11 +147,11 @@ public class Flask {
     * */
 
     public FlaskType getFlaskColorType(){
-        return flaskSelection.flasktype;
+        return flaskSelection.getFlasktype();
     }
 
     public FlaskType getOldFlaskColorType(){
-        return oldFlask.flasktype;
+        return oldFlask.getFlasktype();
     }
 
     public void onGroundCollision(){
@@ -165,5 +176,8 @@ public class Flask {
 
     public Circle getOldCircle(){
         return oldFlask.getCollisionCircle();
+    }
+    public Circle[] getOldCircles(){
+        return oldFlask.getCollisionCircles();
     }
 }

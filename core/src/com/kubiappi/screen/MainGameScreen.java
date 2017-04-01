@@ -43,21 +43,29 @@ public class MainGameScreen extends AbstractScreen {
         renderer.rect(playerRectangle.x,playerRectangle.y,playerRectangle.width,playerRectangle.height);
         renderer.rect(groundRectangle.x,groundRectangle.y,groundRectangle.width,groundRectangle.height);
         renderer.circle(flaskCircle.x,flaskCircle.y,flaskCircle.radius);
-        if(flask.oldFlask != null) {
+        if(!flask.oldIsNull()) {
             FlaskType flaskType = flask.getOldFlaskColorType();
             switch (flaskType){
                 case RED:
-                    if(flask.oldFlask.getCollisionCircle() != null){
-                        Circle flaskRenderCircle = flask.oldFlask.getCollisionCircle();
+                    if(flask.oldCircleTrue()){
+                        Circle flaskRenderCircle = flask.getOldCircle();
                         renderer.circle(flaskRenderCircle.x,flaskRenderCircle.y,flaskRenderCircle.radius);
                     }
                     break;
+                case BLUE:
                 case GREEN:
-                    if(flask.oldFlask.getCollisionRectangle() != null){
-                        Rectangle flaskRenderRectangle = flask.oldFlask.getCollisionRectangle();
+                    if(flask.oldRectangleTrue()){
+                        Rectangle flaskRenderRectangle = flask.getOldRectangle();
                         renderer.rect(flaskRenderRectangle.x,flaskRenderRectangle.y,flaskRenderRectangle.width,flaskRenderRectangle.height);
                     }
                     break;
+                case YELLOW:
+                    if (flask.oldCircleArrayTrue()){
+                        Circle[] flaskRenderCircles = flask.getOldCircles();
+                        for(int i =0; i<4;i++){
+                            renderer.circle(flaskRenderCircles[i].x,flaskRenderCircles[i].y,flaskRenderCircles[i].radius);
+                        }
+                    }
             }
         }
     }
@@ -77,9 +85,9 @@ public class MainGameScreen extends AbstractScreen {
     }
 
     private void update() {
-        livesNum = Integer.toString(player.lives);
-        if(flask.oldFlask != null){
-            flask.oldFlask.lookTimer();
+        livesNum = Integer.toString(player.getLives());
+        if(!flask.oldIsNull()){
+            flask.oldLookTime();
         }
         if(livesNum.equals("0"))
             System.exit(0);
@@ -107,13 +115,22 @@ public class MainGameScreen extends AbstractScreen {
             flask.setPosition(new Vector2(GameInfo.FLASK_START_X, GameInfo.FLASK_START_Y));
         }
         if(flask.playerCollision(player)){
-            player.lives -= 1;
+            player.decrementLives();
             flask.setNewFlask(true);
             flask.setPosition(new Vector2(GameInfo.FLASK_START_X, GameInfo.FLASK_START_Y));
         }
-        if(flask.oldFlask != null && (flask.oldFlask.getCollisionCircle() != null || flask.oldFlask.getCollisionRectangle() != null) && flask.oldFlask.PlayerCollision(player) && player.getLastId() != flask.oldFlask.getId()){
-            player.setLastId(flask.oldFlask.getId());
-            player.lives -= 1;
+
+        player.setSpeed(200f);
+        System.out.println(flask.getFlaskColorType());
+
+        if(!flask.oldIsNull() && (flask.oldCircleTrue()|| flask.oldRectangleTrue()/* || flask.oldCircleArrayTrue()*/) && flask.oldPlayerCollision(player) && player.getLastId() != flask.oldId()){
+            if(flask.getOldFlaskColorType() == FlaskType.BLUE){
+                player.setSpeed(400f);
+            }
+            else {
+                player.setLastId(flask.oldId());
+                player.decrementLives();
+            }
         }
     }
 
@@ -140,21 +157,21 @@ public class MainGameScreen extends AbstractScreen {
 
     private void goLeft() {
         Vector2 position = player.getPosition();
-        position.x -= 200f * Gdx.graphics.getDeltaTime();
+        position.x -= player.getSpeed() * Gdx.graphics.getDeltaTime();
         if(position.x < 170)
             position.x = 170;
         player.setPosition((int)position.x,(int)position.y);
     }
 
-    public void goRight(){
+    private void goRight(){
         Vector2 position = player.getPosition();
-        position.x += 200f * Gdx.graphics.getDeltaTime();
+        position.x += player.getSpeed() * Gdx.graphics.getDeltaTime();
         if(position.x > 630)
             position.x = 630;
         player.setPosition((int)position.x,(int)position.y);
     }
 
-    public void flaskTimer(){
+    private void flaskTimer(){
         if(flask.getNewFlask()){
             timer = 0;
         }

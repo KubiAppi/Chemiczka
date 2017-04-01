@@ -11,15 +11,17 @@ import com.kubiappi.info.GameInfo;
 public class Player {
 
     private Rectangle collisionRectanglePlayer;
-    public int lives;
+    private int lives;
 
     private float x, y;
     private FlaskType lastCollision;
     private int lastId;
+    private float speed;
 
     public Player(){
         collisionRectanglePlayer = new Rectangle(x,y, GameInfo.PLAYER_WIDTH,GameInfo.PLAYER_HEIGHT);
         lives = 5;
+        speed = 200f;
     }
 
     public void setPosition(int x, int y){
@@ -55,5 +57,21 @@ public class Player {
 
     public int getLastId() {
         return lastId;
+    }
+
+    public void setSpeed(float speed){
+        this.speed = speed;
+    }
+
+    public float getSpeed(){
+        return speed;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void decrementLives(){
+        lives -= 1;
     }
 }

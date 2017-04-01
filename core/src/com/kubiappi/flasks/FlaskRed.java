@@ -44,6 +44,11 @@ public class FlaskRed extends FlaskMain {
     }
 
     @Override
+    public Circle[] getCollisionCircles() {
+        return new Circle[0];
+    }
+
+    @Override
     public Rectangle getCollisionRectangle() {
         return null;
     }
