@@ -34,7 +34,7 @@ public class FlaskRed extends FlaskMain {
     }
     public void lookTimer(){
         timer += Gdx.graphics.getDeltaTime();
-        if(timer > 1.75f)
+        if(timer > 6f)
             collisionBoomCircle = null;
     }
 

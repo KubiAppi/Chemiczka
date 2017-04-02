@@ -85,6 +85,30 @@ public class MainGameScreen extends AbstractScreen {
     }
 
     private void update() {
+        if(flask.groundCollision(ground)){
+            flask.setNewFlask(true);
+            flask.onGroundCollision();
+            flask.randomSelectFlaskType();
+            flask.setPosition(new Vector2(GameInfo.FLASK_START_X, GameInfo.FLASK_START_Y));
+        }
+        if(flask.playerCollision(player)){
+            player.decrementLives();
+            flask.setNewFlask(true);
+            flask.setPosition(new Vector2(GameInfo.FLASK_START_X, GameInfo.FLASK_START_Y));
+        }
+
+        player.setSpeed(200f);
+        System.out.println(flask.getFlaskColorType());
+
+        if(!flask.oldIsNull() && (flask.oldCircleTrue()|| flask.oldRectangleTrue() || flask.oldCircleArrayTrue()) && flask.oldPlayerCollision(player) && player.getLastId() != flask.oldId()){
+            if(flask.getOldFlaskColorType() == FlaskType.BLUE){
+                player.setSpeed(400f);
+            }
+            else {
+                player.setLastId(flask.oldId());
+                player.decrementLives();
+            }
+        }
         livesNum = Integer.toString(player.getLives());
         if(!flask.oldIsNull()){
             flask.oldLookTime();
@@ -108,30 +132,7 @@ public class MainGameScreen extends AbstractScreen {
         if(left)
             goLeft();
 
-        if(flask.groundCollision(ground)){
-            flask.setNewFlask(true);
-            flask.onGroundCollision();
-            flask.randomSelectFlaskType();
-            flask.setPosition(new Vector2(GameInfo.FLASK_START_X, GameInfo.FLASK_START_Y));
-        }
-        if(flask.playerCollision(player)){
-            player.decrementLives();
-            flask.setNewFlask(true);
-            flask.setPosition(new Vector2(GameInfo.FLASK_START_X, GameInfo.FLASK_START_Y));
-        }
 
-        player.setSpeed(200f);
-        System.out.println(flask.getFlaskColorType());
-
-        if(!flask.oldIsNull() && (flask.oldCircleTrue()|| flask.oldRectangleTrue()/* || flask.oldCircleArrayTrue()*/) && flask.oldPlayerCollision(player) && player.getLastId() != flask.oldId()){
-            if(flask.getOldFlaskColorType() == FlaskType.BLUE){
-                player.setSpeed(400f);
-            }
-            else {
-                player.setLastId(flask.oldId());
-                player.decrementLives();
-            }
-        }
     }
 
     @Override
