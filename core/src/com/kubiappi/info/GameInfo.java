@@ -25,6 +25,23 @@ public class GameInfo {
     public static final Vector2 FLASK_THROW_4 = new Vector2(50,300);
     public static final Vector2 FLASK_THROW_5 = new Vector2(25,300);
 
+    public static final float FLASK_RED_RADIUS = 75f;
+
+    public static final float FLASK_GREEN_ACID_WIDTH = 350f;
+    public static final float FLASK_GREEN_ACID_HEIGHT = 15f;
+
+    public static final float FLASK_BLUE_ACID_WIDTH = 350f;
+    public static final float FLASK_BLUE_ACID_HEIGHT = 15f;
+
     public static final float FLASK_YELLOW_BIG_RADIUS = 35;
     public static final float FLASK_YELLOW_SMALL_RADIUS = 20;
+
+    public static final float BONUS_RADIUS = 25f;
+    public static final float BONUS_MAIN_Y = 35f;
+
+    public static final Vector2 BONUS_THROW_1 = new Vector2(200,100);
+    public static final Vector2 BONUS_THROW_2 = new Vector2(400,100);
+    public static final Vector2 BONUS_THROW_3 = new Vector2(300,100);
+    public static final Vector2 BONUS_THROW_4 = new Vector2(100,100);
+    public static final Vector2 BONUS_THROW_5 = new Vector2(700,100);
 }

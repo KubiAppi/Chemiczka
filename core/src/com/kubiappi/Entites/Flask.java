@@ -180,4 +180,8 @@ public class Flask {
     public Circle[] getOldCircles(){
         return oldFlask.getCollisionCircles();
     }
+
+    public int getId(){
+        return id;
+    }
 }

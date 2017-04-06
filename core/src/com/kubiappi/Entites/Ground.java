@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
  */
 public class Ground {
 
-    private Rectangle collisionGroundRectangle;
+    protected Rectangle collisionGroundRectangle;
 
     public Ground(){
         collisionGroundRectangle = new Rectangle(-5,0,900,5);

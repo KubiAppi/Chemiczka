@@ -42,7 +42,6 @@ public class FlaskYellow extends FlaskMain {
         if(timer > 0.5f){
             for (int i = 0; i<4;i++){
                 collisionCircles[i].y -= 100f * Gdx.graphics.getDeltaTime();
-                System.out.println(collisionCircles[i].y);
                 switch (i){
                     case 0:
                         collisionCircles[i].x -= 100f * Gdx.graphics.getDeltaTime();

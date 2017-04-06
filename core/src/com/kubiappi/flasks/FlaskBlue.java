@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.kubiappi.Entites.Player;
 import com.kubiappi.enums.FlaskType;
+import com.kubiappi.info.GameInfo;
 
 /**
  * Created by Kuba Szczepaniak on 2017-03-25.
@@ -25,7 +26,7 @@ public class FlaskBlue extends FlaskMain {
     public void onCollisionGround(Vector2 flaskPosition, int id) {
         this.id = id;
         position = flaskPosition;
-        collisionRectangle = new Rectangle(position.x - 175,0,350,15);
+        collisionRectangle = new Rectangle(position.x - 175,0, GameInfo.FLASK_BLUE_ACID_WIDTH,GameInfo.FLASK_BLUE_ACID_HEIGHT);
     }
 
     @Override
@@ -58,6 +59,9 @@ public class FlaskBlue extends FlaskMain {
     @Override
     public boolean PlayerCollision(Player player) {
         Rectangle playerCollision = player.getCollisionRectanglePlayer();
-        return Intersector.overlaps(playerCollision,collisionRectangle);
+        if(collisionRectangle != null)
+            return Intersector.overlaps(playerCollision,collisionRectangle);
+        else
+            return false;
     }
 }

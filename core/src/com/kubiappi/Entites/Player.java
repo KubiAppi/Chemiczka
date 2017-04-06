@@ -74,4 +74,8 @@ public class Player {
     public void decrementLives(){
         lives -= 1;
     }
+
+    public void incrementLives() {
+        lives++;
+    }
 }
