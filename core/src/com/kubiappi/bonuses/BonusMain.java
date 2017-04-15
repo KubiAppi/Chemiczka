@@ -84,4 +84,12 @@ public abstract class BonusMain{
     public void deleteCircle() {
         collisionCircle = null;
     }
+
+    public Texture getTexture() {
+        return texture;
+    }
+
+    public Vector2 getPosition(){
+        return new Vector2(collisionCircle.x,collisionCircle.y);
+    }
 }

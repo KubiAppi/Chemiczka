@@ -18,7 +18,8 @@ public class FlaskBlue extends FlaskMain {
     private Rectangle collisionRectangle;
 
     public FlaskBlue(){
-//        texture = new Texture("");
+        textureFlask = new Texture("blue_flask.png");
+        textureAfter = new Texture("blue_after_static.png");
         flasktype = FlaskType.BLUE;
     }
 

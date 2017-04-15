@@ -1,6 +1,7 @@
 package com.kubiappi.bonuses;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.kubiappi.flasks.FlaskMain;
 
 /**
@@ -9,6 +10,7 @@ import com.kubiappi.flasks.FlaskMain;
 public class BonusPencil extends BonusMain {
 
     public BonusPencil(){
+        texture = new Texture("bonus_pencil.png");
         bonusType = BonusType.PENCIL;
         bonusThrow = false;
     }

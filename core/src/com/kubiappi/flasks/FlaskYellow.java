@@ -18,7 +18,8 @@ public class FlaskYellow extends FlaskMain {
     private Circle[] collisionCircles = new Circle[4];
 
     public FlaskYellow(){
-        //texture = new Texture('');
+        textureFlask = new Texture("yellow_flask.png");
+        textureAfter = new Texture("red_after_static.png");
         flasktype = FlaskType.YELLOW;
     }
 
@@ -39,48 +40,50 @@ public class FlaskYellow extends FlaskMain {
     @Override
     public void lookTimer() {
         timer += Gdx.graphics.getDeltaTime();
-        if(timer > 0.5f){
-            for (int i = 0; i<4;i++){
-                collisionCircles[i].y -= 100f * Gdx.graphics.getDeltaTime();
-                switch (i){
-                    case 0:
-                        collisionCircles[i].x -= 100f * Gdx.graphics.getDeltaTime();
-                        break;
-                    case 1:
-                        collisionCircles[i].x += 100f * Gdx.graphics.getDeltaTime();
-                        break;
-                    case 2:
-                        collisionCircles[i].x -= 200f * Gdx.graphics.getDeltaTime();
-                        break;
-                    case 3:
-                        collisionCircles[i].x += 200f * Gdx.graphics.getDeltaTime();
-                        break;
+        if(collisionCircles != null){
+            if(timer > 0.5f){
+                for (int i = 0; i<4;i++){
+                    collisionCircles[i].y -= 100f * Gdx.graphics.getDeltaTime();
+                    switch (i){
+                        case 0:
+                            collisionCircles[i].x -= 100f * Gdx.graphics.getDeltaTime();
+                            break;
+                        case 1:
+                            collisionCircles[i].x += 100f * Gdx.graphics.getDeltaTime();
+                            break;
+                        case 2:
+                            collisionCircles[i].x -= 200f * Gdx.graphics.getDeltaTime();
+                            break;
+                        case 3:
+                            collisionCircles[i].x += 200f * Gdx.graphics.getDeltaTime();
+                            break;
+                    }
+    //                if(i == 1 || i == 3){
+    //                    collisionCircles[i].x += 100f * Gdx.graphics.getDeltaTime();
+    //                }else{
+    //                    collisionCircles[i].x -= 100f * Gdx.graphics.getDeltaTime();
+    //                }
                 }
-//                if(i == 1 || i == 3){
-//                    collisionCircles[i].x += 100f * Gdx.graphics.getDeltaTime();
-//                }else{
-//                    collisionCircles[i].x -= 100f * Gdx.graphics.getDeltaTime();
-//                }
-            }
-        }else{
-            for (int i = 0; i<4;i++){
-                switch (i){
-                    case 0:
-                        collisionCircles[i].y += 100f * Gdx.graphics.getDeltaTime();
-                        collisionCircles[i].x -= 100f * Gdx.graphics.getDeltaTime();
-                        break;
-                    case 1:
-                        collisionCircles[i].y += 100f * Gdx.graphics.getDeltaTime();
-                        collisionCircles[i].x += 100f * Gdx.graphics.getDeltaTime();
-                        break;
-                    case 2:
-                        collisionCircles[i].y += 200f * Gdx.graphics.getDeltaTime();
-                        collisionCircles[i].x -= 200f * Gdx.graphics.getDeltaTime();
-                        break;
-                    case 3:
-                        collisionCircles[i].y += 200f * Gdx.graphics.getDeltaTime();
-                        collisionCircles[i].x += 200f * Gdx.graphics.getDeltaTime();
-                        break;
+            }else{
+                for (int i = 0; i<4;i++){
+                    switch (i){
+                        case 0:
+                            collisionCircles[i].y += 100f * Gdx.graphics.getDeltaTime();
+                            collisionCircles[i].x -= 100f * Gdx.graphics.getDeltaTime();
+                            break;
+                        case 1:
+                            collisionCircles[i].y += 100f * Gdx.graphics.getDeltaTime();
+                            collisionCircles[i].x += 100f * Gdx.graphics.getDeltaTime();
+                            break;
+                        case 2:
+                            collisionCircles[i].y += 200f * Gdx.graphics.getDeltaTime();
+                            collisionCircles[i].x -= 200f * Gdx.graphics.getDeltaTime();
+                            break;
+                        case 3:
+                            collisionCircles[i].y += 200f * Gdx.graphics.getDeltaTime();
+                            collisionCircles[i].x += 200f * Gdx.graphics.getDeltaTime();
+                            break;
+                    }
                 }
             }
         }

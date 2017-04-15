@@ -18,7 +18,8 @@ public class FlaskGreen extends FlaskMain {
     private Rectangle collisionRectangle;
 
     public FlaskGreen(){
-        //texture = new Texture("");
+        textureFlask = new Texture("green_flask.png");
+        textureAfter = new Texture("green_after_static.png");
         flasktype = FlaskType.GREEN;
     }
 

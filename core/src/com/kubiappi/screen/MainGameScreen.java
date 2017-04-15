@@ -2,7 +2,9 @@ package com.kubiappi.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
@@ -25,13 +27,16 @@ public class MainGameScreen extends AbstractScreen {
     private Player player;
     private Ground ground;
     private Flask flask;
-    private float timer, timerBonusSpeed,timerBonusShield;
+    private float timer, timerBonusSpeed,timerBonusShield, countRotation;
     private BitmapFont lives;
     private String livesNum;
     private boolean right, left, speedUp,shieldUp;
     private int  bonusNum;
     private BonusMain[] bonuses;
     private float score;
+    private Texture playerTerxture,teacherTexture, backgroundTexture, groundTexture, heartTexture, flaskTexture, oldTexture, shieldTexture;
+    private Sprite flaskSprite;
+    private Vector2 oldPosition, yellowPosition[];
 
     public MainGameScreen(GameMain game) {
         super(game);
@@ -40,6 +45,13 @@ public class MainGameScreen extends AbstractScreen {
         bonuses = new BonusMain[5];
         player = new Player();
         player.setPosition((int) GameInfo.PLAYER_START_X,(int) GameInfo.PLAYER_START_Y);
+        playerTerxture = new Texture("Ja static.png");
+        teacherTexture = new Texture("mama.png");
+        backgroundTexture = new Texture("background_2.png");
+        groundTexture = new Texture("ground.png");
+        heartTexture = new Texture("heart_without_black.png");
+        shieldTexture = new Texture("shield.png");
+        yellowPosition = new Vector2[4];
         ground = new Ground();
         teacher = new Teacher();
         flask = new Flask();
@@ -54,7 +66,7 @@ public class MainGameScreen extends AbstractScreen {
         Rectangle groundRectangle = ground.getCollisionGroundRectangle();
         Rectangle teacherRectangle = teacher.getCollisionGroundRectangle();
         Circle flaskCircle = flask.getCollisionCircleFlask();
-        renderer.rect(playerRectangle.x,playerRectangle.y,playerRectangle.width,playerRectangle.height);
+       // renderer.rect(playerRectangle.x,playerRectangle.y,playerRectangle.width,playerRectangle.height);
         renderer.rect(groundRectangle.x,groundRectangle.y,groundRectangle.width,groundRectangle.height);
         renderer.rect(teacherRectangle.x,teacherRectangle.y,teacherRectangle.width,teacherRectangle.height);
         renderer.circle(flaskCircle.x,flaskCircle.y,flaskCircle.radius);
@@ -70,6 +82,7 @@ public class MainGameScreen extends AbstractScreen {
                 case RED:
                     if(flask.oldCircleTrue()){
                         Circle flaskRenderCircle = flask.getOldCircle();
+                        oldPosition = new Vector2(flaskRenderCircle.x - GameInfo.FLASK_RED_RADIUS,flaskRenderCircle.y - GameInfo.FLASK_RED_RADIUS);
                         renderer.circle(flaskRenderCircle.x,flaskRenderCircle.y,flaskRenderCircle.radius);
                     }
                     break;
@@ -77,6 +90,7 @@ public class MainGameScreen extends AbstractScreen {
                 case GREEN:
                     if(flask.oldRectangleTrue()){
                         Rectangle flaskRenderRectangle = flask.getOldRectangle();
+                        oldPosition = new Vector2(flaskRenderRectangle.x,flaskRenderRectangle.y);
                         renderer.rect(flaskRenderRectangle.x,flaskRenderRectangle.y,flaskRenderRectangle.width,flaskRenderRectangle.height);
                     }
                     break;
@@ -84,28 +98,73 @@ public class MainGameScreen extends AbstractScreen {
                     if (flask.oldCircleArrayTrue()){
                         Circle[] flaskRenderCircles = flask.getOldCircles();
                         for(int i =0; i<4;i++){
+                            yellowPosition[i] = new Vector2(flaskRenderCircles[i].x,flaskRenderCircles[i].y);
                             renderer.circle(flaskRenderCircles[i].x,flaskRenderCircles[i].y,flaskRenderCircles[i].radius);
                         }
                     }
             }
+            oldTexture = flask.getOldAfterTexture();
         }
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
+        setFlaskTexture();
         update();
         renderer.setProjectionMatrix(camera.combined);
         renderer.begin(ShapeRenderer.ShapeType.Line);
         drawDebug();
         renderer.end();
         batch.begin();
-        lives.draw(batch,livesNum,600f,420f);
+        batch.draw(backgroundTexture,0,0);
+        batch.draw(playerTerxture,player.getPosition().x,player.getPosition().y,playerTerxture.getWidth(),playerTerxture.getHeight());
+        batch.draw(teacherTexture,0,5,teacherTexture.getWidth(),teacherTexture.getHeight());
+        batch.draw(groundTexture,-5,0,groundTexture.getWidth(),groundTexture.getHeight());
+        if(flask.oldFlaskIsYellow()){
+            for (int i =0; i<4;i++){
+                if(i <=1 ){
+                    batch.draw(oldTexture,yellowPosition[i].x-75,yellowPosition[i].y-75);
+                }else
+                    batch.draw(oldTexture,yellowPosition[i].x-75,yellowPosition[i].y-75,75,75);
+
+            }
+        }
+        try {
+            batch.draw(oldTexture, oldPosition.x, oldPosition.y);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        flaskSprite.draw(batch);
+        for(int i=1; i <= player.getLives();i++){
+            batch.draw(heartTexture,740 - i*60,400);
+        }
+        for(BonusMain bonus:bonuses){
+            try{
+                batch.draw(bonus.getTexture(),bonus.getPosition().x - GameInfo.BONUS_RADIUS,bonus.getPosition().y - GameInfo.BONUS_RADIUS);
+                System.out.println("ues");
+            }catch (Exception e){
+
+            }
+        }
+        if(shieldUp)
+            batch.draw(shieldTexture, player.getPosition().x - 25,player.getPosition().y);
+        //lives.draw(batch,livesNum,600f,420f);
         batch.end();
 
     }
 
+    private void setFlaskTexture() {
+        flaskTexture = flask.getNowFlaskTexture();
+        flaskSprite = new Sprite(flaskTexture);
+        flaskSprite.setRotation(countRotation);
+        flaskSprite.setPosition(flask.getPosition().x,flask.getPosition().y);
+    }
+
     private void update() {
+        countRotation += 3;
+        if(countRotation >= 360)
+            countRotation = 0;
         float lastScore = score;
         score = (float) flask.getId();
         if(score%3 == 0 && lastScore != score){
@@ -124,15 +183,19 @@ public class MainGameScreen extends AbstractScreen {
                         player.incrementLives();
                         break;
                     case SPEED:
-                        bonuses[i].deleteCircle();
                         speedUp = true;
+                        bonuses[i].deleteCircle();
                         break;
                     case SHIELD:
-                        bonuses[i].deleteCircle();
                         shieldUp = true;
+                        bonuses[i].deleteCircle();
                         break;
                     case PENCIL:
                         bonuses[i].onPlayerCollision(player);
+                        break;
+                    case BOOTS:
+                        bonuses[i].onPlayerCollision(player);
+                        break;
                     default:
                         System.out.println("default");
                         break;
@@ -163,20 +226,26 @@ public class MainGameScreen extends AbstractScreen {
             flask.setPosition(new Vector2(GameInfo.FLASK_START_X, GameInfo.FLASK_START_Y));
         }
 
-        player.setSpeed(200f);
+
         System.out.println(flask.getFlaskColorType());
 
         if(speedUp){
             timerBonusSpeed += Gdx.graphics.getDeltaTime();
             player.setSpeed(500f);
-            if(timerBonusSpeed > 5f)
+            if(timerBonusSpeed > 5f){
                 speedUp = false;
-        }
+                timerBonusSpeed = 0;
+            }
+
+        }else
+            player.setSpeed(200f);
 
         if(shieldUp){
             timerBonusShield += Gdx.graphics.getDeltaTime();
-            if(timerBonusShield > 5f)
+            if(timerBonusShield > 5f){
                 shieldUp = false;
+                timerBonusShield = 0;
+            }
         }
 
         if(!shieldUp && !flask.oldIsNull() && (flask.oldCircleTrue()|| flask.oldRectangleTrue() || flask.oldCircleArrayTrue()) && flask.oldPlayerCollision(player) && player.getLastId() != flask.oldId()){
@@ -261,9 +330,7 @@ public class MainGameScreen extends AbstractScreen {
                 bonuses[bonusNum] = new BonusSpeed();
                 break;
         }
-        do {
-            bonuses[bonusNum].createCircle(new Vector2(150, 100));
-        }while (Intersector.overlaps(bonuses[bonusNum].getCollisionCircle(),player.getCollisionRectanglePlayer()));
+        bonuses[bonusNum].createCircle(new Vector2(150, 100));
         bonusNum++;
         if(bonusNum > 4)
             bonusNum = 0;

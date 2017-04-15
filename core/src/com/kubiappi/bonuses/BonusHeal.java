@@ -1,6 +1,7 @@
 package com.kubiappi.bonuses;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.kubiappi.info.GameInfo;
 
@@ -14,6 +15,7 @@ public class BonusHeal extends BonusMain {
     private Vector2 throwBonusVector;
 
     public BonusHeal(){
+        texture = new Texture("bonus_heart.png");
         bonusType = BonusType.HEAL;
         selectThrowBonusVector();
     }

@@ -12,7 +12,7 @@ import com.kubiappi.enums.FlaskType;
  */
 public abstract class FlaskMain {
 
-    protected Texture texture;
+    protected Texture textureAfter, textureFlask;
     protected FlaskType flasktype;
     int id;
     Vector2 position;
@@ -40,5 +40,13 @@ public abstract class FlaskMain {
 
     public FlaskType getFlasktype() {
         return flasktype;
+    }
+
+    public Texture getTextureAfter(){
+        return textureAfter;
+    }
+
+    public Texture getTextureFlask() {
+        return textureFlask;
     }
 }

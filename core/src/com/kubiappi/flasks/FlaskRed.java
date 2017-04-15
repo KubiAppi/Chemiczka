@@ -19,7 +19,8 @@ public class FlaskRed extends FlaskMain {
     private Circle collisionBoomCircle;
 
     public FlaskRed(){
-//        texture = new Texture("");
+        textureFlask = new Texture("red_flask.png");
+        textureAfter = new Texture("red_after_static.png");
         flasktype = FlaskType.RED;
     }
 

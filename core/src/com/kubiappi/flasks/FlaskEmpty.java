@@ -14,7 +14,8 @@ import com.kubiappi.enums.FlaskType;
 public class FlaskEmpty extends FlaskMain  {
 
     public FlaskEmpty(){
-        //texture = new Texture("");
+        textureFlask = new Texture("empty_flask.png");
+        textureAfter = new Texture("empty.png");
         flasktype = FlaskType.EMPTY;
     }
 

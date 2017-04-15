@@ -1,6 +1,7 @@
 package com.kubiappi.Entites;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
@@ -19,6 +20,7 @@ public class Flask {
     private Vector2 position;
     private FlaskMain flaskSelection,oldFlask;
     private int id;
+    private Texture oldFlaskTexture, nowFlaskTexture, oldAfterTexture, nowAfterTexture;
 
     public Flask(){
         collisionCircleFlask = new Circle(GameInfo.FLASK_START_X, GameInfo.FLASK_START_Y,GameInfo.FLASK_RADIUS);
@@ -71,6 +73,8 @@ public class Flask {
     public void randomSelectFlaskType(){
         Random rand = new Random();
         oldFlask = flaskSelection;
+        oldFlaskTexture = nowFlaskTexture;
+        oldAfterTexture = nowAfterTexture;
         switch (rand.nextInt(5)){
             case 0:
                 flaskSelection = new FlaskRed();
@@ -90,6 +94,9 @@ public class Flask {
                 flaskSelection = new FlaskYellow();
 
         }
+        nowFlaskTexture = flaskSelection.getTextureAfter();
+        nowFlaskTexture = flaskSelection.getTextureFlask();
+
     }
 
     public void setPosition(Vector2 position){
@@ -146,6 +153,22 @@ public class Flask {
     *       SETTERS
     * */
 
+    public Texture getNowAfterTexture() {
+        return nowAfterTexture;
+    }
+
+    public Texture getNowFlaskTexture() {
+        return nowFlaskTexture;
+    }
+
+    public Texture getOldAfterTexture() {
+        return oldFlask.getTextureAfter();
+    }
+
+    public Texture getOldFlaskTexture() {
+        return oldFlaskTexture;
+    }
+
     public FlaskType getFlaskColorType(){
         return flaskSelection.getFlasktype();
     }
@@ -183,5 +206,17 @@ public class Flask {
 
     public int getId(){
         return id;
+    }
+
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    public boolean oldFlaskIsYellow(){
+        try {
+            return oldFlask.getFlasktype() == FlaskType.YELLOW;
+        }catch (Exception e){
+            return false;
+        }
     }
 }
