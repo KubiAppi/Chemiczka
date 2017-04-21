@@ -27,14 +27,14 @@ public class MainGameScreen extends AbstractScreen {
     private Player player;
     private Ground ground;
     private Flask flask;
-    private float timer, timerBonusSpeed,timerBonusShield, countRotation;
+    private float timer, timerBonusSpeed,timerBonusShield, countRotation, timerAnim, timerAnimTeacher;
     private BitmapFont lives;
     private String livesNum;
-    private boolean right, left, speedUp,shieldUp;
-    private int  bonusNum;
+    private boolean right, left, speedUp,shieldUp, teacherThrow;
+    private int  bonusNum, animSet, animSetTeacher;
     private BonusMain[] bonuses;
     private float score;
-    private Texture playerTerxture,teacherTexture, backgroundTexture, groundTexture, heartTexture, flaskTexture, oldTexture, shieldTexture;
+    private Texture playerTexture[],teacherTexture[], backgroundTexture, groundTexture, heartTexture, flaskTexture, oldTexture, shieldTexture;
     private Sprite flaskSprite;
     private Vector2 oldPosition, yellowPosition[];
 
@@ -43,10 +43,20 @@ public class MainGameScreen extends AbstractScreen {
         bonusNum = 0;
         speedUp = shieldUp = false;
         bonuses = new BonusMain[5];
+        playerTexture = new Texture[4];
+        teacherTexture = new Texture[4];
         player = new Player();
+        animSet = 0;
+        animSetTeacher = 0;
         player.setPosition((int) GameInfo.PLAYER_START_X,(int) GameInfo.PLAYER_START_Y);
-        playerTerxture = new Texture("Ja static.png");
-        teacherTexture = new Texture("mama.png");
+        playerTexture[0] = new Texture("Ja static.png");
+        playerTexture[1] = new Texture("Ja static2.png");
+        playerTexture[2] = new Texture("Ja static3.png");
+        playerTexture[3] = new Texture("Ja static4.png");
+        teacherTexture[0] = new Texture("mama.png");
+        teacherTexture[1] = new Texture("mama2.png");
+        teacherTexture[2] = new Texture("mama3.png");
+        teacherTexture[3] = new Texture("mama4.png");
         backgroundTexture = new Texture("background_2.png");
         groundTexture = new Texture("ground.png");
         heartTexture = new Texture("heart_without_black.png");
@@ -118,8 +128,16 @@ public class MainGameScreen extends AbstractScreen {
         renderer.end();
         batch.begin();
         batch.draw(backgroundTexture,0,0);
-        batch.draw(playerTerxture,player.getPosition().x,player.getPosition().y,playerTerxture.getWidth(),playerTerxture.getHeight());
-        batch.draw(teacherTexture,0,5,teacherTexture.getWidth(),teacherTexture.getHeight());
+        if(left)
+            batch.draw(playerTexture[animSet],player.getPosition().x,player.getPosition().y,playerTexture[animSet].getWidth(),playerTexture[animSet].getHeight());
+        else if(right)
+            batch.draw(playerTexture[animSet],player.getPosition().x + playerTexture[animSet].getWidth(),player.getPosition().y,-playerTexture[animSet].getWidth(),playerTexture[animSet].getHeight());
+        else
+            batch.draw(playerTexture[0],player.getPosition().x,player.getPosition().y,playerTexture[0].getWidth(),playerTexture[0].getHeight());
+        if(!teacherThrow)
+            batch.draw(teacherTexture[0],0,5,teacherTexture[0].getWidth(),teacherTexture[0].getHeight());
+        else
+            batch.draw(teacherTexture[animSetTeacher],0,5,teacherTexture[animSetTeacher].getWidth(),teacherTexture[animSetTeacher].getHeight());
         batch.draw(groundTexture,-5,0,groundTexture.getWidth(),groundTexture.getHeight());
         if(flask.oldFlaskIsYellow()){
             for (int i =0; i<4;i++){
@@ -131,7 +149,8 @@ public class MainGameScreen extends AbstractScreen {
             }
         }
         try {
-            batch.draw(oldTexture, oldPosition.x, oldPosition.y);
+            if(!flask.oldFlaskIsYellow())
+                batch.draw(oldTexture, oldPosition.x, oldPosition.y);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -141,8 +160,15 @@ public class MainGameScreen extends AbstractScreen {
         }
         for(BonusMain bonus:bonuses){
             try{
-                batch.draw(bonus.getTexture(),bonus.getPosition().x - GameInfo.BONUS_RADIUS,bonus.getPosition().y - GameInfo.BONUS_RADIUS);
-                System.out.println("ues");
+                if(bonus.getPosition().y > 35f){
+                    Sprite bonusRotation = new Sprite(bonus.getTexture());
+                    bonusRotation.setRotation(countRotation);
+                    bonusRotation.setPosition(bonus.getPosition().x,bonus.getPosition().y);
+                    bonusRotation.draw(batch);
+                }else {
+                    batch.draw(bonus.getTexture(), bonus.getPosition().x - GameInfo.BONUS_RADIUS, bonus.getPosition().y - GameInfo.BONUS_RADIUS);
+                    System.out.println("ues");
+                }
             }catch (Exception e){
 
             }
@@ -155,13 +181,28 @@ public class MainGameScreen extends AbstractScreen {
     }
 
     private void setFlaskTexture() {
-        flaskTexture = flask.getNowFlaskTexture();
-        flaskSprite = new Sprite(flaskTexture);
+        flaskSprite = new Sprite(flask.getNowFlaskTexture());
         flaskSprite.setRotation(countRotation);
         flaskSprite.setPosition(flask.getPosition().x,flask.getPosition().y);
     }
 
     private void update() {
+        timerAnim += Gdx.graphics.getDeltaTime();
+        timerAnimTeacher += Gdx.graphics.getDeltaTime();
+        if(timerAnimTeacher > 0.05 && teacherThrow){
+            animSetTeacher++;
+            if(animSetTeacher > 3){
+                animSetTeacher = 0;
+                teacherThrow = false;
+            }
+            timerAnimTeacher = 0;
+        }
+        if(timerAnim > 0.1){
+            animSet++;
+            if(animSet>3)
+                animSet = 0;
+            timerAnim=0;
+        }
         countRotation += 3;
         if(countRotation >= 360)
             countRotation = 0;
@@ -379,6 +420,7 @@ public class MainGameScreen extends AbstractScreen {
         }
         timer += Gdx.graphics.getDeltaTime();
         if(timer < 1){
+            teacherThrow = true;
             flask.throwFlask();
         }
     }
