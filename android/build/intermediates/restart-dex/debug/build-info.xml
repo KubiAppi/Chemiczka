@@ -5,27 +5,41 @@
     density="xxhdpi"
     format="8"
     plugin-version="2.2.2"
-    timestamp="268030606024096"
+    timestamp="100967041265436"
     token="-255506126512274890"
-    verifier="FULL_BUILD_REQUESTED" >
+    verifier="COLD_SWAP_REQUESTED" >
 
     <task
         name="javac"
-        duration="952" />
+        duration="199" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="160" />
+        duration="36" />
     <task
         name="verifier"
-        duration="3" />
+        duration="2" />
 
     <artifact
-        location="F:\java projekt\Chemiczka2\android\build\outputs\apk\android-debug.apk"
-        type="MAIN" />
+        location="F:\java projekt\Chemiczka2\android\build\intermediates\transforms\dex\debug\folders\1000\5\slice_4\classes.dex"
+        type="DEX" />
 
+    <build
+        timestamp="100862629974527"
+        verifier="FULL_BUILD_REQUESTED" >
+        <artifact
+            location="F:\java projekt\Chemiczka2\android\build\outputs\apk\android-debug.apk"
+            type="MAIN" />
+    </build>
+    <build
+        timestamp="100967041265436"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="F:\java projekt\Chemiczka2\android\build\intermediates\transforms\dex\debug\folders\1000\5\slice_4\classes.dex"
+            type="DEX" />
+    </build>
     <build
         timestamp="457790621332460"
         verifier="FULL_BUILD_REQUESTED" >

@@ -51,8 +51,8 @@ public class MainGameScreen extends AbstractScreen {
         player.setPosition((int) GameInfo.PLAYER_START_X,(int) GameInfo.PLAYER_START_Y);
         playerTexture[0] = new Texture("Ja static.png");
         playerTexture[1] = new Texture("Ja static2.png");
-        playerTexture[2] = new Texture("Ja static3.png");
-        playerTexture[3] = new Texture("Ja static4.png");
+        playerTexture[2] = new Texture("ja static3.png");
+        playerTexture[3] = new Texture("ja static4.png");
         teacherTexture[0] = new Texture("mama.png");
         teacherTexture[1] = new Texture("mama2.png");
         teacherTexture[2] = new Texture("mama3.png");
@@ -304,7 +304,7 @@ public class MainGameScreen extends AbstractScreen {
             flask.oldLookTime();
         }
         if(livesNum.equals("0"))
-            System.exit(0);
+            game.setScreen(new LoseScreen(game, (int) score));
         flaskTimer();
         flask.update();
 //        if(Gdx.input.getX() > GameInfo.WIDTH || Gdx.input.isKeyPressed(Keys.RIGHT)){

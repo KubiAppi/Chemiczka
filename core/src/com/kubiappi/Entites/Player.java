@@ -20,7 +20,7 @@ public class Player {
 
     public Player(){
         collisionRectanglePlayer = new Rectangle(x,y, GameInfo.PLAYER_WIDTH,GameInfo.PLAYER_HEIGHT);
-        lives = 5;
+        lives = 3;
         speed = 200f;
     }
 
@@ -76,6 +76,7 @@ public class Player {
     }
 
     public void incrementLives() {
-        lives++;
+        if(lives < 5)
+            lives++;
     }
 }
