@@ -1,6 +1,7 @@
 package com.kubiappi.flasks;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
@@ -17,8 +18,10 @@ import com.kubiappi.info.GameInfo;
 public class FlaskRed extends FlaskMain {
 
     private Circle collisionBoomCircle;
+    private Sound explosiveSound;
 
     public FlaskRed(){
+        explosiveSound = Gdx.audio.newSound(Gdx.files.internal("Explosion1.mp3"));
         textureFlask = new Texture("red_flask.png");
         textureAfter = new Texture("red_after_static.png");
         flasktype = FlaskType.RED;
@@ -27,6 +30,7 @@ public class FlaskRed extends FlaskMain {
 
     public void onCollisionGround(Vector2 flaskPosition, int id) {
         this.id = id;
+        explosiveSound.play();
         position = flaskPosition;
         collisionBoomCircle = new Circle(position, GameInfo.FLASK_RED_RADIUS);
     }

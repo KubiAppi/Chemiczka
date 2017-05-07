@@ -2,6 +2,8 @@ package com.kubiappi.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -37,9 +39,16 @@ public class MainGameScreen extends AbstractScreen {
     private Texture playerTexture[],teacherTexture[], backgroundTexture, groundTexture, heartTexture, flaskTexture, oldTexture, shieldTexture;
     private Sprite flaskSprite;
     private Vector2 oldPosition, yellowPosition[];
+    private Music backgroundMusic;
+    private Sound breakSound, explosiveSound;
 
     public MainGameScreen(GameMain game) {
         super(game);
+        breakSound = Gdx.audio.newSound(Gdx.files.internal("Lamp-Switch_On.mp3"));
+        explosiveSound = Gdx.audio.newSound(Gdx.files.internal("Explosion1.mp3"));
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Monsters-in-Bell-Bottoms_Looping.mp3"));
+        backgroundMusic.setLooping(true);
+        backgroundMusic.play();
         bonusNum = 0;
         speedUp = shieldUp = false;
         bonuses = new BonusMain[5];
@@ -261,6 +270,7 @@ public class MainGameScreen extends AbstractScreen {
             flask.setPosition(new Vector2(GameInfo.FLASK_START_X, GameInfo.FLASK_START_Y));
         }
         if(flask.playerCollision(player)){
+            breakSound.play();
             if(!shieldUp)
                 player.decrementLives();
             flask.setNewFlask(true);
@@ -303,8 +313,10 @@ public class MainGameScreen extends AbstractScreen {
         if(!flask.oldIsNull()){
             flask.oldLookTime();
         }
-        if(livesNum.equals("0"))
+        if(livesNum.equals("0")) {
+            backgroundMusic.dispose();
             game.setScreen(new LoseScreen(game, (int) score));
+        }
         flaskTimer();
         flask.update();
 //        if(Gdx.input.getX() > GameInfo.WIDTH || Gdx.input.isKeyPressed(Keys.RIGHT)){

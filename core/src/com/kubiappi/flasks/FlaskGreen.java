@@ -1,6 +1,7 @@
 package com.kubiappi.flasks;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
@@ -16,8 +17,10 @@ import com.kubiappi.info.GameInfo;
 public class FlaskGreen extends FlaskMain {
 
     private Rectangle collisionRectangle;
+    private Sound breakSound;
 
     public FlaskGreen(){
+        breakSound = Gdx.audio.newSound(Gdx.files.internal("Lamp-Switch_On.mp3"));
         textureFlask = new Texture("green_flask.png");
         textureAfter = new Texture("green_after_static.png");
         flasktype = FlaskType.GREEN;
@@ -28,6 +31,7 @@ public class FlaskGreen extends FlaskMain {
         this.id = id;
         position = flaskPosition;
         collisionRectangle = new Rectangle(position.x - 175,0, GameInfo.FLASK_GREEN_ACID_WIDTH,GameInfo.FLASK_GREEN_ACID_HEIGHT);
+        breakSound.play();
     }
 
     @Override

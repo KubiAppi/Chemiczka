@@ -1,5 +1,7 @@
 package com.kubiappi.flasks;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
@@ -13,7 +15,10 @@ import com.kubiappi.enums.FlaskType;
  */
 public class FlaskEmpty extends FlaskMain  {
 
+    private Sound breakSound;
+
     public FlaskEmpty(){
+        breakSound = Gdx.audio.newSound(Gdx.files.internal("Lamp-Switch_On.mp3"));
         textureFlask = new Texture("empty_flask.png");
         textureAfter = new Texture("empty.png");
         flasktype = FlaskType.EMPTY;
@@ -21,7 +26,7 @@ public class FlaskEmpty extends FlaskMain  {
 
     @Override
     public void onCollisionGround(Vector2 flaskPosition, int id) {
-
+        breakSound.play();
     }
 
     @Override
