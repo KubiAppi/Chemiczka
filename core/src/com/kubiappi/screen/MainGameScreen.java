@@ -4,9 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
@@ -30,7 +33,7 @@ public class MainGameScreen extends AbstractScreen {
     private Ground ground;
     private Flask flask;
     private float timer, timerBonusSpeed,timerBonusShield, countRotation, timerAnim, timerAnimTeacher;
-    private BitmapFont lives;
+    private BitmapFont scoreFont;
     private String livesNum;
     private boolean right, left, speedUp,shieldUp, teacherThrow;
     private int  bonusNum, animSet, animSetTeacher;
@@ -57,6 +60,8 @@ public class MainGameScreen extends AbstractScreen {
         player = new Player();
         animSet = 0;
         animSetTeacher = 0;
+        scoreFont = new BitmapFont();
+        scoreFont.setColor(Color.RED);
         player.setPosition((int) GameInfo.PLAYER_START_X,(int) GameInfo.PLAYER_START_Y);
         playerTexture[0] = new Texture("Ja static.png");
         playerTexture[1] = new Texture("Ja static2.png");
@@ -74,7 +79,6 @@ public class MainGameScreen extends AbstractScreen {
         ground = new Ground();
         teacher = new Teacher();
         flask = new Flask();
-        lives = new BitmapFont();
         Gdx.input.setInputProcessor(this);
         //livesNum = "3";
     }
@@ -137,6 +141,7 @@ public class MainGameScreen extends AbstractScreen {
         renderer.end();
         batch.begin();
         batch.draw(backgroundTexture,0,0);
+        scoreFont.draw(batch,"" + (int) score,50,450);
         if(left)
             batch.draw(playerTexture[animSet],player.getPosition().x,player.getPosition().y,playerTexture[animSet].getWidth(),playerTexture[animSet].getHeight());
         else if(right)
@@ -234,10 +239,12 @@ public class MainGameScreen extends AbstractScreen {
                         break;
                     case SPEED:
                         speedUp = true;
+                        timerBonusSpeed = 0;
                         bonuses[i].deleteCircle();
                         break;
                     case SHIELD:
                         shieldUp = true;
+                        timerBonusShield = 0;
                         bonuses[i].deleteCircle();
                         break;
                     case PENCIL:
@@ -288,8 +295,7 @@ public class MainGameScreen extends AbstractScreen {
                 timerBonusSpeed = 0;
             }
 
-        }else
-            player.setSpeed(200f);
+        }
 
         if(shieldUp){
             timerBonusShield += Gdx.graphics.getDeltaTime();
@@ -334,7 +340,7 @@ public class MainGameScreen extends AbstractScreen {
         if(left)
             goLeft();
 
-
+        player.setSpeed(200);
     }
 
     private void selectBonus() {

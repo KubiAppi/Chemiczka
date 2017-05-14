@@ -3,48 +3,21 @@
 
     <item
         is-multidex="true"
-        jar="F:\java projekt\Chemiczka2\android\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="e39fc12667fa5557cf8d35978c79dd2a6b0188e1">
-        <dex dex="F:\java projekt\Chemiczka2\android\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_19fc3201a5fa10161d8cdd0b564ddc98878c094e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Kuba Szczepaniak\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx\1.9.5\dc65bb2f51828c58b1b2b3ac585357204d54ee5f\gdx-1.9.5.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="dc65bb2f51828c58b1b2b3ac585357204d54ee5f">
-        <dex dex="F:\java projekt\Chemiczka2\android\build\intermediates\transforms\dex\debug\folders\1000\10\gdx-1.9.5_4b20d0035f08fa4cfd570311ac8df91832cc25f3\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Kuba Szczepaniak\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-backend-android\1.9.5\293bbe05bfb5ca812c849e4d1f494f56509d5a6e\gdx-backend-android-1.9.5.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="293bbe05bfb5ca812c849e4d1f494f56509d5a6e">
-        <dex dex="F:\java projekt\Chemiczka2\android\build\intermediates\transforms\dex\debug\folders\1000\10\gdx-backend-android-1.9.5_d4c492044c5e0e0b9280b5f028747e344112a640\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="F:\java projekt\Chemiczka2\android\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
-        sha1="efd59b9a8306497acf87b2fe517e9bbf8d18a1c3">
-        <dex dex="F:\java projekt\Chemiczka2\android\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_3e5cfa3651e491f773cfb032fc9bc9a2995f4fa6\classes.dex" />
+        sha1="9814f1eaa34955a506f27d9c332c7562dee87cae">
+        <dex dex="F:\java projekt\Chemiczka2\android\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_3e5cfa3651e491f773cfb032fc9bc9a2995f4fa6\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Kuba Szczepaniak\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-box2d\1.9.5\c8098219abfe00b849cc43d461b1105fea3a2944\gdx-box2d-1.9.5.jar"
+        jar="F:\java projekt\Chemiczka2\android\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
-        sha1="c8098219abfe00b849cc43d461b1105fea3a2944">
-        <dex dex="F:\java projekt\Chemiczka2\android\build\intermediates\transforms\dex\debug\folders\1000\10\gdx-box2d-1.9.5_b48b393afdeb9076ccdfa6e181975cca31959f41\classes.dex" />
+        sha1="c323c36ecc68965c4cfb460f7721113d2b61ed03">
+        <dex dex="F:\java projekt\Chemiczka2\android\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_19fc3201a5fa10161d8cdd0b564ddc98878c094e\classes.dex" />
     </item>
 
 </items>

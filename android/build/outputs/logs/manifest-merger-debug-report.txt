@@ -17,6 +17,7 @@ ADDED from F:\java projekt\Chemiczka2\android\AndroidManifest.xml:2:1-26:12
 		ADDED from F:\java projekt\Chemiczka2\android\AndroidManifest.xml:2:11-69
 uses-sdk
 ADDED from F:\java projekt\Chemiczka2\android\AndroidManifest.xml:7:5-73
+MERGED from [com.android.support:multidex:1.0.1] C:\Users\Kuba Szczepaniak\.android\build-cache\a36abe2d1259e6c4e7c17751a41401a3edec0446\output\AndroidManifest.xml:18:5-42
 	android:targetSdkVersion
 		ADDED from F:\java projekt\Chemiczka2\android\AndroidManifest.xml:7:41-70
 		INJECTED from F:\java projekt\Chemiczka2\android\AndroidManifest.xml

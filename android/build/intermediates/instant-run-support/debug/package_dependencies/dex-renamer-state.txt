@@ -1,0 +1,10 @@
+#Sun May 07 23:33:46 CEST 2017
+renamed.2=classes.dex
+renamed.1=classes3.dex
+renamed.0=classes2.dex
+base.2=F\:\\java projekt\\Chemiczka2\\android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\gdx-1.9.5_4b20d0035f08fa4cfd570311ac8df91832cc25f3
+base.1=F\:\\java projekt\\Chemiczka2\\android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\gdx-box2d-1.9.5_b48b393afdeb9076ccdfa6e181975cca31959f41
+base.0=F\:\\java projekt\\Chemiczka2\\android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\gdx-backend-android-1.9.5_d4c492044c5e0e0b9280b5f028747e344112a640
+file.2=F\:\\java projekt\\Chemiczka2\\android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\gdx-1.9.5_4b20d0035f08fa4cfd570311ac8df91832cc25f3\\classes.dex
+file.1=F\:\\java projekt\\Chemiczka2\\android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\gdx-box2d-1.9.5_b48b393afdeb9076ccdfa6e181975cca31959f41\\classes.dex
+file.0=F\:\\java projekt\\Chemiczka2\\android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\gdx-backend-android-1.9.5_d4c492044c5e0e0b9280b5f028747e344112a640\\classes.dex
