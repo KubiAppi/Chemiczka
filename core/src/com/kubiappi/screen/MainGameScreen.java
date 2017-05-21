@@ -6,10 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
@@ -44,14 +41,13 @@ public class MainGameScreen extends AbstractScreen {
     private Vector2 oldPosition, yellowPosition[];
     private Music backgroundMusic;
     private Sound breakSound, explosiveSound;
+    private ParticleEffect throwEffect, redEffect, yelloEffect[], greenEffect;
+    private TextureAtlas throwEffectAtlas, redEffectAtlas, yelloEffectAtlas[], greenEffectAtlas;
 
     public MainGameScreen(GameMain game) {
         super(game);
-        breakSound = Gdx.audio.newSound(Gdx.files.internal("Lamp-Switch_On.mp3"));
-        explosiveSound = Gdx.audio.newSound(Gdx.files.internal("Explosion1.mp3"));
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Monsters-in-Bell-Bottoms_Looping.mp3"));
-        backgroundMusic.setLooping(true);
-        backgroundMusic.play();
+        initMusic();
+        initEffect();
         bonusNum = 0;
         speedUp = shieldUp = false;
         bonuses = new BonusMain[5];
@@ -63,6 +59,42 @@ public class MainGameScreen extends AbstractScreen {
         scoreFont = new BitmapFont();
         scoreFont.setColor(Color.RED);
         player.setPosition((int) GameInfo.PLAYER_START_X,(int) GameInfo.PLAYER_START_Y);
+        initTexture();
+        yellowPosition = new Vector2[4];
+        ground = new Ground();
+        teacher = new Teacher();
+        flask = new Flask();
+        Gdx.input.setInputProcessor(this);
+        //livesNum = "3";
+    }
+
+    private void initEffect() {
+        greenEffect = new ParticleEffect();
+        greenEffect.load(Gdx.files.internal("greenFlask.p"),Gdx.files.internal(""));
+        greenEffect.start();
+        redEffect = new ParticleEffect();
+        redEffect.load(Gdx.files.internal("redFlask.p"),Gdx.files.internal(""));
+        redEffect.start();
+        yelloEffect = new ParticleEffect[4];
+        for(int i=0; i < 4; i ++){
+            yelloEffect[i] = new ParticleEffect();
+            yelloEffect[i].load(Gdx.files.internal("redFlask.p"),Gdx.files.internal(""));
+            yelloEffect[i].start();
+        }
+        throwEffect = new ParticleEffect();
+        throwEffect.load(Gdx.files.internal("smoke.p"),Gdx.files.internal(""));
+        throwEffect.start();
+    }
+
+    private void initMusic() {
+        breakSound = Gdx.audio.newSound(Gdx.files.internal("Lamp-Switch_On.mp3"));
+        explosiveSound = Gdx.audio.newSound(Gdx.files.internal("Explosion1.mp3"));
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Monsters-in-Bell-Bottoms_Looping.mp3"));
+        backgroundMusic.setLooping(true);
+        backgroundMusic.play();
+    }
+
+    private void initTexture() {
         playerTexture[0] = new Texture("Ja static.png");
         playerTexture[1] = new Texture("Ja static2.png");
         playerTexture[2] = new Texture("ja static3.png");
@@ -75,13 +107,8 @@ public class MainGameScreen extends AbstractScreen {
         groundTexture = new Texture("ground.png");
         heartTexture = new Texture("heart_without_black.png");
         shieldTexture = new Texture("shield.png");
-        yellowPosition = new Vector2[4];
-        ground = new Ground();
-        teacher = new Teacher();
-        flask = new Flask();
-        Gdx.input.setInputProcessor(this);
-        //livesNum = "3";
     }
+
 
     @Override
     public void drawDebug() {
@@ -157,18 +184,33 @@ public class MainGameScreen extends AbstractScreen {
             for (int i =0; i<4;i++){
                 if(i <=1 ){
                     batch.draw(oldTexture,yellowPosition[i].x-75,yellowPosition[i].y-75);
-                }else
-                    batch.draw(oldTexture,yellowPosition[i].x-75,yellowPosition[i].y-75,75,75);
+                    yelloEffect[i].setPosition(yellowPosition[i].x-75,yellowPosition[i].y-75);
+                    yelloEffect[i].draw(batch,delta);
+                }else {
+                    batch.draw(oldTexture, yellowPosition[i].x - 75, yellowPosition[i].y - 75, 75, 75);
+                    yelloEffect[i].setPosition(yellowPosition[i].x,yellowPosition[i].y);
+                    yelloEffect[i].draw(batch,delta);
+                }
 
             }
         }
         try {
-            if(!flask.oldFlaskIsYellow())
+            if(!flask.oldFlaskIsYellow()){
                 batch.draw(oldTexture, oldPosition.x, oldPosition.y);
+                if(flask.getOldFlaskColorType() == FlaskType.GREEN){
+                    greenEffect.setPosition(oldPosition.x,oldPosition.y);
+                    greenEffect.draw(batch,delta);
+                }else if(flask.getOldFlaskColorType() == FlaskType.RED){
+                    redEffect.setPosition(oldPosition.x+ 75,oldPosition.y + 75);
+                    redEffect.draw(batch,delta);
+                }
+            }
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
         flaskSprite.draw(batch);
+        throwEffect.setPosition(flask.getPosition().x + 50,flask.getPosition().y + 50);
+        throwEffect.draw(batch,delta);
         for(int i=1; i <= player.getLives();i++){
             batch.draw(heartTexture,740 - i*60,400);
         }
@@ -201,6 +243,12 @@ public class MainGameScreen extends AbstractScreen {
     }
 
     private void update() {
+        if(throwEffect.isComplete())
+            throwEffect.reset();
+        if(redEffect.isComplete())
+            redEffect.reset();
+        if(greenEffect.isComplete())
+            greenEffect.reset();
         timerAnim += Gdx.graphics.getDeltaTime();
         timerAnimTeacher += Gdx.graphics.getDeltaTime();
         if(timerAnimTeacher > 0.05 && teacherThrow){
