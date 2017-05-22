@@ -85,8 +85,9 @@ public class MainMenuScreen extends AbstractScreen {
         buttonPlay.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //uiSound.play();
-                //game.setScreen(new MainGameScreen(game));
+                uiSound.play();
+                backgroundMusic.dispose();
+                game.setScreen(new CreditsScreen(game));
             }
         });
         stage.addActor(buttonPlay);
